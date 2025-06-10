@@ -8,7 +8,7 @@ const AlgorithmExplanation = ({ theme }) => {
     },
     {
       title: 'Step 2: Process Each Bit',
-      description: 'Go through each bit position from left to right.'
+      description: 'Go through each bit position from right to left.'
     },
     {
       title: 'Step 3: Group by Bit Value',
