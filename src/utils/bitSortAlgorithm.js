@@ -9,7 +9,7 @@ export const calculateBits = (array) => {
   return Math.max(4, Math.ceil(Math.log2(maxNum + 1)));
 };
 
-// Generate all sorting steps
+// Generate all sorting steps (LSB to MSB)
 export const generateSortingSteps = (array) => {
   const steps = [];
   const workingArray = [...array];
@@ -25,12 +25,11 @@ export const generateSortingSteps = (array) => {
     isComplete: false
   });
 
-  // Process each bit position from left to right
-  for (let bitPos = 0; bitPos < bits; bitPos++) {
+  // Process each bit position from right (LSB) to left (MSB)
+  for (let bitPos = bits - 1; bitPos >= 0; bitPos--) {
     const zerosGroup = [];
     const onesGroup = [];
 
-    // Separate numbers based on current bit
     for (let i = 0; i < workingArray.length; i++) {
       const binary = toBinary(workingArray[i], bits);
       const currentBit = binary[bitPos];
@@ -43,14 +42,13 @@ export const generateSortingSteps = (array) => {
       }
     }
 
-    // Combine: zeros first, then ones
     const newArray = [...zerosGroup, ...onesGroup];
     workingArray.splice(0, workingArray.length, ...newArray);
 
     steps.push({
       array: [...workingArray],
-      bitPosition: bitPos,
-      description: `Processing bit position ${bitPos + 1}: Separating 0s and 1s`,
+      bitPosition: bits - bitPos,  // For readable step numbering
+      description: `Processing bit position ${bits - bitPos}: Separating 0s and 1s`,
       operations: operationCount,
       isComplete: false
     });
