@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ComparisonPanels = ({ bitSort, theme }) => {
-  const { currentArray, currentBitPosition, operations, sortingSteps, currentStep } = bitSort;
+  const { currentArray, currentBitPosition, operations, sortingSteps, currentStep, maxBits } = bitSort;
 
   const AlgorithmPanel = ({ 
     title, 
@@ -59,7 +59,10 @@ const ComparisonPanels = ({ bitSort, theme }) => {
     </div>
   );
 
-  const bitSortProgress = sortingSteps.length > 0 ? Math.round((currentStep / (sortingSteps.length - 1)) * 100) : 0;
+  // Calculate progress
+  const bitSortProgress = sortingSteps.length > 0
+    ? Math.round((currentStep / (sortingSteps.length - 1)) * 100)
+    : 0;
   const quickSortProgress = Math.min(bitSortProgress + 15, 100);
 
   return (
@@ -67,7 +70,7 @@ const ComparisonPanels = ({ bitSort, theme }) => {
       <AlgorithmPanel
         title="BitSort Algorithm"
         complexity="O(nk) - Non-comparison based"
-        statusText={`Processing bit position ${currentBitPosition + 1} of ${bitSort.maxBits}`}
+        statusText={`Processing bit position ${maxBits - currentBitPosition} of ${maxBits}`}
         operationsLabel="Operations"
         operationsValue={operations}
         timeValue="1.2"
@@ -83,7 +86,7 @@ const ComparisonPanels = ({ bitSort, theme }) => {
         operationsValue={Math.floor(operations * 0.7)}
         timeValue="0.8"
         progressValue={quickSortProgress}
-        highlightCondition={(index) => index === 0 || index === 2 ? false : index === 1 || index === 3}
+        highlightCondition={(index) => index === 1 || index === 3}
       />
     </div>
   );
